@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Hoe8f8Opt5P3kWUegi8D2zqBprmlo7MySrVl9RYWqHOptvmImZyMCUwDX7wksY1UZAcCmU2IOjjLPuRUfNaNDA==",
+  "success": true,
+  "projectFilePath": "D:\\WBGettingData\\WBGettingData\\WBGettingData\\WBGettingData.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\1\\.nuget\\packages\\microsoft.office.interop.excel\\15.0.4795.1001\\microsoft.office.interop.excel.15.0.4795.1001.nupkg.sha512"
+  ],
+  "logs": []
+}
