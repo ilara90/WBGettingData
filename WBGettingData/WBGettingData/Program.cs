@@ -2,12 +2,21 @@
 using System.Text.Json;
 using System.Web;
 using ExcelLibrary.SpreadSheet;
+using Microsoft.Extensions.Configuration;
+using WBGettingData.Models;
 using Models = WBGettingData.Models.WBSearchModel;
 
-string path = "/WBGettingData/WBGettingData/WBGettingData/Keys.txt";
+var builder = new ConfigurationBuilder()
+               .SetBasePath(Directory.GetCurrentDirectory())
+               .AddJsonFile("appsettings.json", optional: false);
+
+IConfiguration config = builder.Build();
+
+var configurationSettings = config.GetSection("ConfigurationSettings").Get<ConfigurationSettings>();
+
 List<string> keys = new List<string>(); 
 
-using (StreamReader reader = new StreamReader(path))
+using (StreamReader reader = new StreamReader(configurationSettings.KeysPath))
 {
     string? line;
     while ((line = await reader.ReadLineAsync()) != null)
@@ -28,8 +37,7 @@ foreach (var key in keys)
     worksheet.Cells[0, 4] = new Cell("Price");
 
     HttpClient client = new HttpClient();
-    var urlDecode = HttpUtility.UrlDecode(
-        $"https://search.wb.ru/exactmatch/ru/common/v4/search?dest=-1029256,-102269,-2162196,-1257786&query={key}&resultset=catalog&sort=popular");
+    var urlDecode = HttpUtility.UrlDecode(string.Format(configurationSettings.SearchWBURL, key));
     var response = await client.GetAsync(urlDecode);
 
     if (response.StatusCode == HttpStatusCode.OK)
@@ -60,7 +68,7 @@ foreach (var key in keys)
 
 try
 {
-    workbook.Save("D:\\example_workbook.xls");
+    workbook.Save(configurationSettings.ResultPath);
 }
 catch (Exception ex)
 {

@@ -9,6 +9,12 @@
 
     <ItemGroup>
       <PackageReference Include="ExcelLibrary" Version="1.2011.7.31" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+		<Content Include="appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
     </ItemGroup>
 
 </Project>
