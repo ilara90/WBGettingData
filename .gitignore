@@ -396,3 +396,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+*.1
+WBGettingData/.vs/ProjectEvaluation/wbgettingdata.projects.v5.1
