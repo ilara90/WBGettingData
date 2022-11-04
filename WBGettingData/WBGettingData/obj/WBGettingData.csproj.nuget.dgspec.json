@@ -40,9 +40,9 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "Microsoft.Office.Interop.Excel": {
+            "ExcelLibrary": {
               "target": "Package",
-              "version": "[15.0.4795.1001, )"
+              "version": "[1.2011.7.31, )"
             }
           },
           "imports": [

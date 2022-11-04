@@ -1,33 +1,70 @@
-﻿
+﻿using System.Net;
 using System.Text.Json;
 using System.Web;
-using Microsoft.Office.Interop.Excel;
-using _excel = Microsoft.Office.Interop.Excel;
-using Model = WBGettingData.Model;
+using ExcelLibrary.SpreadSheet;
+using Models = WBGettingData.Models.WBSearchModel;
 
-string[] keys = new[] { "Игрушки", "Настолки" };
+string path = "/WBGettingData/WBGettingData/WBGettingData/Keys.txt";
+List<string> keys = new List<string>(); 
 
-_Application excel = new _excel.Application();
-Workbook workbook = excel.Workbooks.Add();
+using (StreamReader reader = new StreamReader(path))
+{
+    string? line;
+    while ((line = await reader.ReadLineAsync()) != null)
+    {
+        keys.Add(line);
+    }
+}
+
+Workbook workbook = new Workbook();
 
 foreach (var key in keys)
 {
+    Worksheet worksheet = new Worksheet(key);
+    worksheet.Cells[0, 0] = new Cell("Title");
+    worksheet.Cells[0, 1] = new Cell("Brand");
+    worksheet.Cells[0, 2] = new Cell("Id");
+    worksheet.Cells[0, 3] = new Cell("Feddbacks");
+    worksheet.Cells[0, 4] = new Cell("Price");
+
     HttpClient client = new HttpClient();
     var urlDecode = HttpUtility.UrlDecode(
         $"https://search.wb.ru/exactmatch/ru/common/v4/search?dest=-1029256,-102269,-2162196,-1257786&query={key}&resultset=catalog&sort=popular");
     var response = await client.GetAsync(urlDecode);
-    var result = await response.Content.ReadAsStringAsync();
-    var deserializedResult = JsonSerializer.Deserialize<Model>(result);
 
-    var worksheet = (Worksheet)workbook.Worksheets[Array.IndexOf(keys, key) + 1];
-    worksheet.Name = key;
-    worksheet.Cells[1, "A"] = "Title";
-    foreach (var product in deserializedResult.Data.Products)
+    if (response.StatusCode == HttpStatusCode.OK)
     {
-        var index = Array.IndexOf(deserializedResult.Data.Products, product) + 2;
-        worksheet.Cells[index, "A"] = product.Name;
+        var result = await response.Content.ReadAsStringAsync();
+        var deserializedResult = JsonSerializer.Deserialize<Models>(result);
+
+        if (deserializedResult?.Data?.Products != null)
+        {
+            foreach (var product in deserializedResult.Data.Products)
+            {
+                var index = Array.IndexOf(deserializedResult.Data.Products, product) + 1;
+                worksheet.Cells[index, 0] = new Cell(product.Name);
+                worksheet.Cells[index, 1] = new Cell(product.Brand);
+                worksheet.Cells[index, 2] = new Cell(product.Id);
+                worksheet.Cells[index, 3] = new Cell(product.Feddbacks);
+                worksheet.Cells[index, 4] = new Cell(product.Price / 100);
+            }
+        }
+
+        workbook.Worksheets.Add(worksheet);
     }
-    
+    else
+    {
+        Console.WriteLine(response.StatusCode);
+    }
 }
 
-workbook.SaveAs("C:\\example_workbook.xlsx");
+try
+{
+    workbook.Save("D:\\example_workbook.xls");
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.Message);
+}
+
+Console.ReadLine();

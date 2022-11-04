@@ -8,17 +8,17 @@
     ".NETCoreApp,Version=v6.0": {
       "WBGettingData/1.0.0": {
         "dependencies": {
-          "Microsoft.Office.Interop.Excel": "15.0.4795.1001"
+          "ExcelLibrary": "1.2011.7.31"
         },
         "runtime": {
           "WBGettingData.dll": {}
         }
       },
-      "Microsoft.Office.Interop.Excel/15.0.4795.1001": {
+      "ExcelLibrary/1.2011.7.31": {
         "runtime": {
-          "lib/netstandard2.0/Microsoft.Office.Interop.Excel.dll": {
-            "assemblyVersion": "15.0.0.0",
-            "fileVersion": "15.0.4795.1000"
+          "lib/ExcelLibrary.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       }
@@ -30,12 +30,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Microsoft.Office.Interop.Excel/15.0.4795.1001": {
+    "ExcelLibrary/1.2011.7.31": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-cuvqi/U5MYSM0gvR2l90q0m/urRgmg69EiwP5VWp1RcaJ0YT5G26Va5LaOZ3KJFc22FNihS5CUjeePUp2YpGQA==",
-      "path": "microsoft.office.interop.excel/15.0.4795.1001",
-      "hashPath": "microsoft.office.interop.excel.15.0.4795.1001.nupkg.sha512"
+      "sha512": "sha512-ogX1mzqe1Ek3Z0AdER4B4QBJoBkt90Mfe0LnyiPg/uP+iZ7rx+9fFXbsZjOlPsS0xNn8sFeesvNnfEnuthudrQ==",
+      "path": "excellibrary/1.2011.7.31",
+      "hashPath": "excellibrary.1.2011.7.31.nupkg.sha512"
     }
   }
 }
